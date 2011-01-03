@@ -1,0 +1,40 @@
+engram - Pure Lua Runtime serialisation for messaging and persistence using the dump format
+
+Based on John Hind's:
+
+http://lua-users.org/wiki/EngramProposal
+
+Provides:
+
+local engram = require"engram".engram
+
+Two modes are supported:
+
+Heavy:
+
+local func = engram(whatever, environment)
+local data = func()
+
+Lite:
+
+local func = engram(whatever)
+local data = func()
+
+The distinction is that if an 'environment' table is passed (second
+argument), then upvalues, function environments and metatables are
+serialized recursively.  Otherwise these are ignored.
+
+Only standard Lua 5.1 bytecode is supported currently.
+
+Caveats:
+
+Serialization is not blazingly fast, but deserialization is pretty fast
+since it uses Lua's dump format.
+
+Further work:
+
+I've got a prototype lying around somewhere which doesn't produce bytecode, but
+generates source strings instead. It's a bit slower during serialization, but
+more portable (obviously). I'll send this version along in due course.
+
+
